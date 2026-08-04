@@ -25,7 +25,7 @@ export const NAV_LINKS = [
 
 export const TRUST_BADGES = [
   { icon: 'clock', text: '15 лет опыта' },
-  { icon: 'shield', text: 'Гарантия 2 года' },
+  { icon: 'shield', text: 'Гарантия 1 год' },
   { icon: 'box', text: 'Свой склад запчастей' },
 ];
 
@@ -114,7 +114,7 @@ export const MODEL_GROUPS = [
 
 export const PRICES = [
   { name: 'Диагностика', price: 'Бесплатно', note: 'при оплате ремонта' },
-  { name: 'Замена масла в АКПП', price: 'от 1 500 ₽' },
+  { name: 'Замена масла в АКПП', price: 'от 2 500 ₽' },
   { name: 'Ремонт гидроблока (соленоиды)', price: 'от 5 000 ₽' },
   { name: 'Ремонт мехатроника DSG', price: 'от 7 000 ₽' },
   { name: 'Ремонт сцепления DSG DQ200', price: 'от 15 000 ₽' },
@@ -125,8 +125,8 @@ export const PRICES = [
 export const STATS = [
   { value: 15, suffix: '+', label: 'лет на рынке' },
   { value: 2500, suffix: '+', label: 'отремонтированных трансмиссий' },
-  { value: 2, suffix: '', label: 'года гарантии без ограничения пробега' },
-  { value: 3, suffix: '', label: 'профессиональных стенда для диагностики' },
+  { value: 1, suffix: '', label: 'год гарантии без ограничения пробега' },
+  { value: 5, suffix: '', label: 'специальных стендов для диагностики' },
 ];
 
 export const ADVANTAGES = [

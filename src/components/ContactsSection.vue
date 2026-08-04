@@ -32,7 +32,7 @@ async function submit() {
   status.value = 'loading';
 
   try {
-    const response = await fetch('http://localhost:3001/send-lead.php', {
+    const response = await fetch('/send.php', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
