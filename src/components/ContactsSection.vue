@@ -1,32 +1,67 @@
 <script setup>
-import { reactive, ref } from 'vue'
-import IconPhone from './icons/IconPhone.vue'
-import IconMapPin from './icons/IconMapPin.vue'
-import IconClock from './icons/IconClock.vue'
-import IconWhatsapp from './icons/IconWhatsapp.vue'
-import IconTelegram from './icons/IconTelegram.vue'
-import { CONTACTS } from '../config/siteData'
+import { reactive, ref } from 'vue';
+import IconPhone from './icons/IconPhone.vue';
+import IconMapPin from './icons/IconMapPin.vue';
+import IconClock from './icons/IconClock.vue';
+import IconWhatsapp from './icons/IconWhatsapp.vue';
+import IconTelegram from './icons/IconTelegram.vue';
+import { CONTACTS } from '../config/siteData';
 
-const form = reactive({ name: '', phone: '', message: '', consent: false })
-const errors = reactive({ name: '', phone: '', consent: '' })
-const status = ref('idle') // idle | success
+const form = reactive({ name: '', phone: '', message: '', consent: false });
+const errors = reactive({ name: '', phone: '', consent: '' });
+
+const status = ref('idle'); // idle | success | loading | error
+const errorMessage = ref('');
 
 function validate() {
-  errors.name = form.name.trim().length < 2 ? 'Укажите имя' : ''
-  errors.phone = form.phone.trim().length < 6 ? 'Укажите телефон для связи' : ''
-  errors.consent = form.consent ? '' : 'Нужно согласие на обработку данных'
-  return !errors.name && !errors.phone && !errors.consent
+  errors.name = form.name.trim().length < 2 ? 'Укажите имя' : '';
+  const cleanPhone = form.phone.replace(/\D/g, '');
+  const isValidPhone =
+    (cleanPhone.length === 11 &&
+      (cleanPhone.startsWith('7') || cleanPhone.startsWith('8'))) ||
+    (cleanPhone.length === 10 && cleanPhone.startsWith('9'));
+  errors.phone = isValidPhone
+    ? ''
+    : 'Введите корректный номер телефона (10 или 11 цифр)';
+  errors.consent = form.consent ? '' : 'Нужно согласие на обработку данных';
+  return !errors.name && !errors.phone && !errors.consent;
 }
 
-function submit() {
-  if (!validate()) return
-  // TODO: подключить отправку заявки в CRM / Telegram-бота / на email.
-  // Сейчас форма только валидирует данные на клиенте.
-  status.value = 'success'
-  form.name = ''
-  form.phone = ''
-  form.message = ''
-  form.consent = false
+async function submit() {
+  if (!validate()) return;
+  status.value = 'loading';
+
+  try {
+    const response = await fetch('http://localhost:3001/send-lead.php', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        name: form.name,
+        phone: form.phone,
+        message: form.message,
+      }),
+    });
+
+    const result = await response.json();
+
+    if (response.ok && result.success) {
+      status.value = 'success';
+      // Очищаем форму только при успехе
+      form.name = '';
+      form.phone = '';
+      form.message = '';
+      form.consent = false;
+    } else {
+      throw new Error(result.message || 'Ошибка сервера при отправке');
+    }
+  } catch (err) {
+    console.error('Ошибка отправки:', err);
+    status.value = 'error';
+    errorMessage.value =
+      'Не удалось отправить форму. Пожалуйста, позвоните нам напрямую.';
+  }
 }
 </script>
 
@@ -36,7 +71,8 @@ function submit() {
       <div v-fade-in>
         <p class="eyebrow">Контакты</p>
         <h2 class="section-title">
-          Заедьте на <span class="accent">бесплатную диагностику</span> уже сегодня
+          Заедьте на <span class="accent">бесплатную диагностику</span> уже
+          сегодня
         </h2>
       </div>
 
@@ -66,46 +102,89 @@ function submit() {
           </div>
 
           <div class="messenger-cta">
-            <a :href="CONTACTS.whatsappHref" target="_blank" rel="noopener" class="btn btn-outline msg-btn">
+            <a
+              :href="CONTACTS.whatsappHref"
+              target="_blank"
+              rel="noopener"
+              class="btn btn-outline msg-btn"
+            >
               <IconWhatsapp class="icon-sm" /> Написать в WhatsApp
             </a>
-            <a :href="CONTACTS.telegramHref" target="_blank" rel="noopener" class="btn btn-outline msg-btn">
+            <a
+              :href="CONTACTS.telegramHref"
+              target="_blank"
+              rel="noopener"
+              class="btn btn-outline msg-btn"
+            >
               <IconTelegram class="icon-sm" /> Написать в Telegram
             </a>
           </div>
         </div>
 
-        <form class="contacts-form card-panel" v-fade-in @submit.prevent="submit">
+        <form
+          class="contacts-form card-panel"
+          v-fade-in
+          @submit.prevent="submit"
+        >
           <h3 class="form-title">Оставить заявку</h3>
-          <p class="form-lead">Перезвоним и запишем на бесплатную диагностику.</p>
+          <p class="form-lead">
+            Перезвоним и запишем на бесплатную диагностику.
+          </p>
 
           <label class="field">
             <span class="field-label">Имя</span>
-            <input v-model="form.name" type="text" class="field-input" placeholder="Как к вам обращаться" />
-            <span v-if="errors.name" class="field-error">{{ errors.name }}</span>
+            <input
+              v-model="form.name"
+              type="text"
+              class="field-input"
+              placeholder="Как к вам обращаться"
+            />
+            <span v-if="errors.name" class="field-error">{{
+              errors.name
+            }}</span>
           </label>
 
           <label class="field">
             <span class="field-label">Телефон</span>
-            <input v-model="form.phone" type="tel" class="field-input" placeholder="+7 (___) ___-__-__" />
-            <span v-if="errors.phone" class="field-error">{{ errors.phone }}</span>
+            <input
+              v-model="form.phone"
+              type="tel"
+              class="field-input"
+              placeholder="+7 (___) ___-__-__"
+            />
+            <span v-if="errors.phone" class="field-error">{{
+              errors.phone
+            }}</span>
           </label>
 
           <label class="field">
             <span class="field-label">Сообщение (необязательно)</span>
-            <textarea v-model="form.message" class="field-input field-textarea" rows="3" placeholder="Опишите проблему"></textarea>
+            <textarea
+              v-model="form.message"
+              class="field-input field-textarea"
+              rows="3"
+              placeholder="Опишите проблему"
+            ></textarea>
           </label>
 
           <label class="field field-checkbox">
             <input v-model="form.consent" type="checkbox" />
             <span>Согласен(на) на обработку персональных данных</span>
           </label>
-          <span v-if="errors.consent" class="field-error">{{ errors.consent }}</span>
+          <span v-if="errors.consent" class="field-error">{{
+            errors.consent
+          }}</span>
 
-          <button type="submit" class="btn btn-gold form-submit">Отправить заявку</button>
+          <button type="submit" class="btn btn-gold form-submit">
+            Отправить заявку
+          </button>
 
           <p v-if="status === 'success'" class="form-success">
             Заявка принята! Мы свяжемся с вами в ближайшее время.
+          </p>
+          <p v-if="status === 'loading'" class="form-success">Отправка...</p>
+          <p v-if="status === 'error'" class="form-error">
+            {{ errorMessage }}
           </p>
         </form>
       </div>
@@ -246,10 +325,16 @@ function submit() {
   margin-top: 22px;
 }
 
-.form-success {
+.form-success,
+.form-error {
   margin-top: 14px;
   font-size: 13px;
-  color: var(--success);
   font-weight: 600;
+}
+.form-success {
+  color: var(--success);
+}
+.form-error {
+  color: var(--danger);
 }
 </style>
