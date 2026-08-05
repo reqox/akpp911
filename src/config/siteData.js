@@ -1,18 +1,12 @@
-// ============================================================================
-// ВСЕ РЕДАКТИРУЕМЫЕ ДАННЫЕ САЙТА СОБРАНЫ ЗДЕСЬ.
-// Плейсхолдеры (телефон, адрес, ссылки на мессенджеры) нужно заменить
-// на реальные перед публикацией — они помечены комментарием "// TODO".
-// ============================================================================
-
 export const CONTACTS = {
-  phoneDisplay: '+7 (964) 927-11-77', // TODO: реальный номер
-  phoneHref: 'tel:+79649271177', // TODO
-  whatsappHref: 'https://wa.me/79649271177', // TODO
-  telegramHref: 'https://t.me/prodsgcvt', // TODO
-  address: 'г. Краснодар, ул. Грушевая, д. 365', // TODO
+  phoneDisplay: '+7 (964) 927-11-77',
+  phoneHref: 'tel:+79649271177',
+  whatsappHref: 'https://wa.me/79649271177',
+  telegramHref: 'https://t.me/prodsgcvt',
+  address: 'г. Краснодар, ул. Грушевая, д. 365',
   workingHours: 'Ежедневно, 09:00 – 18:00',
   mapEmbedSrc:
-    'https://yandex.ru/map-widget/v1/?um=constructor%3Aa488bf84085ce61c16e6dc3dc0257bb52352197f19a28333ca8016f9e66f19b4&amp;source=constructor', // TODO: подставить embed-ссылку на реальную точку СТО
+    'https://yandex.ru/map-widget/v1/?um=constructor%3Aa488bf84085ce61c16e6dc3dc0257bb52352197f19a28333ca8016f9e66f19b4&amp;source=constructor',
 };
 
 export const NAV_LINKS = [
