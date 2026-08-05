@@ -1,34 +1,39 @@
-// Директива v-fade-in: добавляет класс is-visible, когда элемент входит во вьюпорт.
-// Используется вместе с классами .fade-in / .fade-in-stagger из global.css
+// src/composables/fadeInDirective.js
+let observer = null;
 
-const observer = new IntersectionObserver(
-  (entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('is-visible')
-        observer.unobserve(entry.target)
-      }
-    })
-  },
-  { threshold: 0.15, rootMargin: '0px 0px -40px 0px' }
-)
+function getObserver() {
+  if (!observer && typeof window !== 'undefined') {
+    observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.15, rootMargin: '0px 0px -40px 0px' },
+    );
+  }
+  return observer;
+}
 
 export const fadeInDirective = {
   mounted(el) {
-    el.classList.add('fade-in')
-    observer.observe(el)
+    el.classList.add('fade-in');
+    getObserver()?.observe(el);
   },
   unmounted(el) {
-    observer.unobserve(el)
+    getObserver()?.unobserve(el);
   },
-}
+};
 
 export const fadeInStaggerDirective = {
   mounted(el) {
-    el.classList.add('fade-in-stagger')
-    observer.observe(el)
+    el.classList.add('fade-in-stagger');
+    getObserver()?.observe(el);
   },
   unmounted(el) {
-    observer.unobserve(el)
+    getObserver()?.unobserve(el);
   },
-}
+};
