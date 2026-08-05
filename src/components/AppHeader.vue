@@ -1,17 +1,17 @@
 <script setup>
-import { ref } from 'vue'
-import IconGear from './icons/IconGear.vue'
-import IconWhatsapp from './icons/IconWhatsapp.vue'
-import IconTelegram from './icons/IconTelegram.vue'
-import IconPhone from './icons/IconPhone.vue'
-import IconMenu from './icons/IconMenu.vue'
-import IconClose from './icons/IconClose.vue'
-import { CONTACTS, NAV_LINKS } from '../config/siteData'
+import { ref } from 'vue';
+import IconGear from './icons/IconGear.vue';
+import IconWhatsapp from './icons/IconWhatsapp.vue';
+import IconTelegram from './icons/IconTelegram.vue';
+import IconPhone from './icons/IconPhone.vue';
+import IconMenu from './icons/IconMenu.vue';
+import IconClose from './icons/IconClose.vue';
+import { CONTACTS, NAV_LINKS } from '../config/siteData';
 
-const menuOpen = ref(false)
+const menuOpen = ref(false);
 
 function closeMenu() {
-  menuOpen.value = false
+  menuOpen.value = false;
 }
 </script>
 
@@ -23,13 +23,20 @@ function closeMenu() {
           <IconGear />
         </span>
         <span class="logo-text">
-          <span class="logo-name">АКПП<span class="text-gold-shimmer">911</span></span>
+          <span class="logo-name"
+            >АКПП<span class="text-gold-shimmer">911</span></span
+          >
           <span class="logo-slogan">Ремонт трансмиссий любой сложности</span>
         </span>
       </a>
 
       <nav class="nav nav-desktop">
-        <a v-for="link in NAV_LINKS" :key="link.href" :href="link.href" class="nav-link">
+        <a
+          v-for="link in NAV_LINKS"
+          :key="link.href"
+          :href="link.href"
+          class="nav-link"
+        >
           {{ link.label }}
         </a>
       </nav>
@@ -40,17 +47,34 @@ function closeMenu() {
           {{ CONTACTS.phoneDisplay }}
         </a>
         <div class="messengers">
-          <a :href="CONTACTS.whatsappHref" target="_blank" rel="noopener" aria-label="Написать в WhatsApp" class="messenger-icon wa">
+          <a
+            :href="CONTACTS.whatsappHref"
+            target="_blank"
+            rel="noopener"
+            aria-label="Написать в WhatsApp"
+            class="messenger-icon wa"
+          >
             <IconWhatsapp />
           </a>
-          <a :href="CONTACTS.telegramHref" target="_blank" rel="noopener" aria-label="Написать в Telegram" class="messenger-icon tg">
+          <a
+            :href="CONTACTS.telegramHref"
+            target="_blank"
+            rel="noopener"
+            aria-label="Написать в Telegram"
+            class="messenger-icon tg"
+          >
             <IconTelegram />
           </a>
         </div>
         <a href="#contacts" class="btn btn-gold btn-header">Заказать звонок</a>
       </div>
 
-      <button class="burger" @click="menuOpen = !menuOpen" :aria-expanded="menuOpen" aria-label="Открыть меню">
+      <button
+        class="burger"
+        @click="menuOpen = !menuOpen"
+        :aria-expanded="menuOpen"
+        aria-label="Открыть меню"
+      >
         <IconClose v-if="menuOpen" />
         <IconMenu v-else />
       </button>
@@ -58,17 +82,37 @@ function closeMenu() {
 
     <transition name="mobile-menu">
       <div v-if="menuOpen" class="mobile-menu">
-        <a v-for="link in NAV_LINKS" :key="link.href" :href="link.href" class="mobile-link" @click="closeMenu">
+        <a
+          v-for="link in NAV_LINKS"
+          :key="link.href"
+          :href="link.href"
+          class="mobile-link"
+          @click="closeMenu"
+        >
           {{ link.label }}
         </a>
         <a :href="CONTACTS.phoneHref" class="mobile-link mobile-phone">
           <IconPhone class="icon-sm" /> {{ CONTACTS.phoneDisplay }}
         </a>
         <div class="mobile-messengers">
-          <a :href="CONTACTS.whatsappHref" target="_blank" rel="noopener" class="messenger-icon wa"><IconWhatsapp /></a>
-          <a :href="CONTACTS.telegramHref" target="_blank" rel="noopener" class="messenger-icon tg"><IconTelegram /></a>
+          <a
+            :href="CONTACTS.whatsappHref"
+            target="_blank"
+            rel="noopener"
+            class="messenger-icon wa"
+            ><IconWhatsapp
+          /></a>
+          <a
+            :href="CONTACTS.telegramHref"
+            target="_blank"
+            rel="noopener"
+            class="messenger-icon tg"
+            ><IconTelegram
+          /></a>
         </div>
-        <a href="#contacts" class="btn btn-gold" @click="closeMenu">Заказать звонок</a>
+        <a href="#contacts" class="btn btn-gold" @click="closeMenu"
+          >Заказать звонок</a
+        >
       </div>
     </transition>
   </header>
@@ -110,7 +154,9 @@ function closeMenu() {
 }
 
 @keyframes slow-spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .logo-icon svg {
@@ -139,7 +185,9 @@ function closeMenu() {
 }
 
 @media (min-width: 640px) {
-  .logo-slogan { display: block; }
+  .logo-slogan {
+    display: block;
+  }
 }
 
 .nav-desktop {
@@ -148,7 +196,9 @@ function closeMenu() {
 }
 
 @media (min-width: 1024px) {
-  .nav-desktop { display: flex; }
+  .nav-desktop {
+    display: flex;
+  }
 }
 
 .nav-link {
@@ -170,7 +220,9 @@ function closeMenu() {
 }
 
 @media (min-width: 1024px) {
-  .header-contacts { display: flex; }
+  .header-contacts {
+    display: flex;
+  }
 }
 
 .phone-link {
@@ -204,7 +256,9 @@ function closeMenu() {
   justify-content: center;
   border: 1px solid var(--gold-line);
   color: var(--gold-light);
-  transition: transform 0.2s, border-color 0.2s;
+  transition:
+    transform 0.2s,
+    border-color 0.2s;
 }
 
 .messenger-icon svg {
@@ -230,10 +284,15 @@ function closeMenu() {
   height: 34px;
 }
 
-.burger svg { width: 100%; height: 100%; }
+.burger svg {
+  width: 100%;
+  height: 100%;
+}
 
 @media (min-width: 1024px) {
-  .burger { display: none; }
+  .burger {
+    display: none;
+  }
 }
 
 .mobile-menu {
@@ -272,7 +331,9 @@ function closeMenu() {
 
 .mobile-menu-enter-active,
 .mobile-menu-leave-active {
-  transition: opacity 0.2s ease, transform 0.2s ease;
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
 }
 .mobile-menu-enter-from,
 .mobile-menu-leave-to {

@@ -1,8 +1,8 @@
 <script setup>
-import IconGear from './icons/IconGear.vue'
-import { NAV_LINKS, CONTACTS } from '../config/siteData'
+import IconGear from './icons/IconGear.vue';
+import { NAV_LINKS, CONTACTS } from '../config/siteData';
 
-const year = new Date().getFullYear()
+const year = new Date().getFullYear();
 </script>
 
 <template>
@@ -14,13 +14,22 @@ const year = new Date().getFullYear()
       </a>
 
       <nav class="footer-links">
-        <a v-for="link in NAV_LINKS" :key="link.href" :href="link.href">{{ link.label }}</a>
+        <a v-for="link in NAV_LINKS" :key="link.href" :href="link.href">{{
+          link.label
+        }}</a>
       </nav>
 
       <div class="footer-meta">
         <span>© {{ year }} АКПП911. Все права защищены.</span>
-        <a :href="CONTACTS.phoneHref" class="footer-phone">{{ CONTACTS.phoneDisplay }}</a>
-        <a href="#" class="footer-policy">Политика конфиденциальности</a>
+        <a :href="CONTACTS.phoneHref" class="footer-phone">{{
+          CONTACTS.phoneDisplay
+        }}</a>
+        <a
+          href="/politika_konfidencialnosti_v2.pdf"
+          download
+          class="footer-policy"
+          >Политика конфиденциальности</a
+        >
       </div>
     </div>
   </footer>
