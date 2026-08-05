@@ -1,6 +1,6 @@
 <script setup>
-import IconGear from './icons/IconGear.vue'
-import { SERVICES } from '../config/siteData'
+import IconGear from './icons/IconGear.vue';
+import { SERVICES } from '../config/siteData';
 </script>
 
 <template>
@@ -9,16 +9,21 @@ import { SERVICES } from '../config/siteData'
       <div v-fade-in>
         <p class="eyebrow">Наши услуги</p>
         <h2 class="section-title">
-          Обслуживаем <span class="accent">все типы трансмиссий</span> — от диагностики до капремонта
+          Обслуживаем <span class="accent">все типы трансмиссий</span> — от
+          диагностики до капремонта
         </h2>
         <p class="section-lead">
-          Работаем с автоматическими коробками, роботами DSG, вариаторами, редукторами и раздатками —
-          для автомобилей и яхт.
+          Работаем с автоматическими коробками, роботами DSG, вариаторами,
+          редукторами и раздатками — для автомобилей и яхт в Краснодаре и крае.
         </p>
       </div>
 
       <div class="services-grid" v-fade-in-stagger>
-        <article v-for="(service, i) in SERVICES" :key="service.title" class="service-card card-panel">
+        <article
+          v-for="(service, i) in SERVICES"
+          :key="service.title"
+          class="service-card card-panel"
+        >
           <div class="service-number">{{ String(i + 1).padStart(2, '0') }}</div>
           <div class="service-icon">
             <IconGear />
@@ -48,7 +53,9 @@ import { SERVICES } from '../config/siteData'
 .service-card {
   position: relative;
   padding: 28px 24px;
-  transition: transform 0.3s var(--ease-out), border-color 0.3s;
+  transition:
+    transform 0.3s var(--ease-out),
+    border-color 0.3s;
 }
 
 .service-card:hover {
@@ -78,7 +85,10 @@ import { SERVICES } from '../config/siteData'
   transform: rotate(50deg);
 }
 
-.service-icon svg { width: 100%; height: 100%; }
+.service-icon svg {
+  width: 100%;
+  height: 100%;
+}
 
 .service-title {
   font-size: 18px;
