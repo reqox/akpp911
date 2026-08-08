@@ -24,10 +24,7 @@ const year = new Date().getFullYear();
         <a :href="CONTACTS.phoneHref" class="footer-phone">{{
           CONTACTS.phoneDisplay
         }}</a>
-        <a
-          href="/politika_konfidencialnosti_v2.pdf"
-          download
-          class="footer-policy"
+        <a href="/politika_konfidencialnosti.pdf" download class="footer-policy"
           >Политика конфиденциальности</a
         >
       </div>
